@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>protocol</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+    </head>
+ 
+    <body> 
+        
+        <div class="container">
+            <div class="topics">
+            <a href="../index.html">< Nazaj</a><br>
+                <h1 class="top">Protokol - uvod</h1>
+                <a href="merilniki/merilniki.html"><h2>Protokoli za različne tipe merilnikov</h2></a>
+<!--                
+                <a href="merilniki/merilniki.html" target="_blank"><h2>ThermoScientific C-link</h2></a>
+                <a href="topics/02_org.foton/org-foton.html" target="_blank"><h2>org.foton</h2></a>
+                <a href="topics/03_oms.bin/oms-bin.html" target="_blank"><h2>oms.bin</h2></a>
+                <a href="topics/04_oms.libs.common/oms-libs-common.html" target="_blank"><h2>oms.libs.common</h2></a>
+                <a href="topics/05_oms.libs.common.utils/oms-libs-common-utils.html" target="_blank"><h2>oms.libs.common.utils</h2></a>
+                <a href="topics/06_oms.libs.core/oms-libs-core.html" target="_blank"><h2>oms.libs.core</h2></a>
+                <a href="topics/07_oms.libs.html/oms-libs-html.html" target="_blank"><h2>oms.libs.html</h2></a>
+                <a href="topics/08_oms.libs.instruments/oms-libs-instruments.html" target="_blank"><h2>oms.libs.instruments</h2></a>
+-->
+                <h2>! Opombe na opis protokola !</h2>
+                
+                <a href=#horiba>Horiba</a>
+                <a href=#bayern>Bayern/Hessen</a>
+                <p class="main-text">
+                        <li>vrednosti znotraj oklepajev tipa &lt;&gt; označujejo 1 znak (byte), opisan spodaj v tabeli uporabljenih ACSII znakov</li>
+                        <li>vrednosti znotraj oklepajev tipa {} označujejo variabilne vrednosti fiksne dolžine</li>
+                        <li>vrednosti znotraj oklepajev tipa () označujejo variabilne vrednosti variabilne dolžine</li>
+                        <li><b>odebeljene</b> vrednosti so fiksne vrednosti, ki označujejo ločnice</li>
+                        <li><i>poševne</i> vrednosti so fiksne vrednosti, ki so prisotne a nimajo posebnega pomena</li>
+                        <li><u>podčrtane</u> vrednosti so variabilne vrednosti, ki vsebujejo ključne vrednosti (npr. izmerjene vrednosti)</li>
+                <p class="table-text">Tabela uporabljenih ASCII znakov</p>
+                <table class="ascii">
+                    <tr>
+                        <th> Oznaka
+                        </th>
+                        <th> ASCII vrednost
+                        </th>
+                        <th> Opis
+                        </th></tr>
+                        <tr>
+                        <td> SOH
+                        </td>
+                        <td> 0x01
+                        </td>
+                        <td> Start of header
+                        </td></tr>
+                        <tr>
+                        <td> STX
+                        </td>
+                        <td> 0x02
+                        </td>
+                        <td> Start of text
+                        </td></tr>
+                        <tr>
+                        <td> ETX
+                        </td>
+                        <td> 0x03
+                        </td>
+                        <td> End of text
+                        </td></tr>
+                        <tr>
+                        <td> SP </td>
+                        <td> 0x20 </td>
+                        <td> Presledek (space)
+                        </td></tr>
+                        <tr>
+                        <td> cc </td>
+                        <td> </td>
+                        <td> checksum
+                        </td></tr>
+                        <tr>
+                        <td> nn </td>
+                        <td> </td>
+                        <td> cifra
+                        </td></tr>
+                        <tr>
+                        <td> -+ </td>
+                        <td> </td>
+                        <td> predznak: minus ali plus
+                        </td></tr>
+                </table>
+                <p class="main-text">Zahteva in odgovor sta sestavljeni iz okvirja, ki vsebuje začetni znak, končni znak in checksum.</p>
+                
+                </p>
+                
+                
+                <h2>Checksum</h2>
+                <p class="main-text">Checksum je način preverjanja, ali je blok prejetih znakov res tisto kar bi moral prejeti in ali je med prenosom prišlo do motenj ali napak.</p>
+                <h3 id="bayern">Bayern/Hessen</h3>
+                <p clss="main-text">Izračunani checksum je binarni XOR vseh znakov od vključno z [STX] do vključno z [ETX]. Rezultat je en 8 bitni znak (byte), vendar je pretvorjen v 2 heksadecimalna znaka (0-9, a-f), prvi znak je heksadecimalna prezentacija prvih štirih bitov, drugi pa zadnjih štirih bitov. Ta dva heksadecimalna znaka sta dodana na koncu zahteve.</p>
+                
+                <h3 id="horiba">Horiba</h3>
+                <p clss="main-text">Izračunani checksum je binarni XOR vseh znakov od vključno z [SOH] do vključno z znakom pred checksum znakoma. Rezultat je en 8 bitni znak (byte), vendar je pretvorjen v 2 heksadecimalna znaka (0-9, a-f), prvi znak je heksadecimalna prezentacija prvih štirih bitov, drugi pa zadnjih štirih bitov. Ta dva heksadecimalna znaka sta dodana na koncu zahteve.</p><br>
+                <p class="table">Izračun checksuma v C jeziku: (izrez iz Horiba dokumentacije)</p>
+                    
+                    <pre>void set_check_sum(unsigned char frame[])
+{
+    unsigned char *ptr;
+    unsigned char fcs; 
+    fcs = 0x00;
+    for (ptr = frame; *ptr!='\0'; ptr++) {
+        fcs ^= *ptr;    /* XOR */
+    }
+    sprintf(ptr, "%02X\x03", fcs);
+}</pre>
+                <a class="a" href="#top">Pojdi na vrh</a>
+            </div>    
+        </div>
+    </body>
+</html>

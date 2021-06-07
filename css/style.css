@@ -1,0 +1,123 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+body {
+    font-family: myFont; 
+    font-size: 15px;
+}
+
+@font-face{
+      font-family: myFont;
+      src:url(../fonts/roboto/Roboto-Regular.ttf);
+      font-weight:normal;
+      font-style:normal;
+}
+
+h1, h2 {
+    color: #00960b;  
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 20px;
+    margin: 40px 0 10px 0;
+}
+
+h3 {
+    font-size: 18px;
+    margin: 15px 0 5px 0;
+    color: #24be42;  
+}
+
+a  {
+    display: block;
+    color: #00960b;
+    font-size: 20px;
+}
+
+.a {
+    display: flex;
+    font-size:15px;
+    justify-content:flex-end;
+}
+
+pre {
+    display: block;
+    white-space: pre-wrap;
+    background-color: #f4f4f4;
+    margin: 5px;
+    padding: 10px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 13px;
+}
+
+.main-text {
+    text-align: justify;
+    margin: 10px 0 20px 0;
+}
+
+.container {
+    width: 1140px;
+    margin: 20px auto 0 auto;
+}
+
+.topics {
+    width: 75%;
+    float: left;
+    padding-right: 30px;
+    position: relative;
+}
+
+.other-posts {
+    width: 25%;
+    float: left;
+}
+
+.other {
+    margin-bottom: 40px;
+}
+
+.ascii {
+  font-family: myFont;
+  border-collapse: collapse;
+  width: 50%;
+}
+
+.ascii td, #ascii th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.ascii tr:nth-child(even){background-color: #f2f2f2;}
+
+.ascii tr:hover {background-color: #ddd;}
+
+.ascii th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.table-text {
+    text-align: justify;
+    font-style: italic;
+    margin: 5px 0 5px 0;
+}
+
+

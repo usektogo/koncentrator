@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>protokol</title>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    </head>
+ 
+    <body>  
+        
+        <div class="container">
+            <div class="topics">
+                <a href="../../instrumenti/index.html">< Nazaj</a> <br>
+                <h1 class="top">Protokol merilnikov</h1>
+                
+                
+                <a href="#ap370">1 Horiba AP370</a>
+                <a href="#clink">2 ThermoScientific C-link</a>
+                
+               
+                
+                
+    <!------------------------    1 Horiba ap370 ---------------------------------------------------------------- !-->  
+                
+                <h2 id=ap370>1 Horiba AP370</h2>
+                    <p class="main-text">
+                    Horiba AP370 je protokol instrumentov proizvajalca Horiba model AP*A in ENDA.<br>
+                        Privzete RS232 nastavitve so <b>19200 8n1</b>
+                    </p>
+                <h3>Opis sestave splošnega sporočila</h3>
+                <p class="main-text">
+                    <b>&lt;SOH&gt;</b>{ss}{rr}{ff}{cccc}<b>&lt;STX&gt;</b>(prm){cc}<b>&lt;ETX&gt;</b>
+                    </p>
+                    <table>
+
+                        <tr>
+                        <td> ss </td>
+                        <td> - Hex ID pošiljatelja, 2 znaka , <b>ff</b> ignorira od kod prihaja sporočilo
+                        </td></tr>
+                        <tr>
+                        <td> rr </td>
+                        <td> - Hex ID naslovnika, 2 znaka, <b>ff</b> ignorira komu se pošilja
+                        </td></tr>
+                        <tr>
+                        <td> ff </td>
+                        <td> - Hex zaporedna številka sporočila, 2 zanka, <b>ff</b> ignorira številko
+                        </td></tr>
+                        <tr>
+                        <td> cccc </td>
+                        <td> - ukaz, 4 znaki
+                        </td></tr>
+                        <tr>
+                        <td> prm </td>
+                        <td> - argumenti ukazu ali argumenti odgovora
+                        </td></tr>
+                        <tr>
+                        <td> cc </td>
+                        <td> - checksum ()
+                            </td></tr>
+                    </table>
+                    <p class="main-text">Vsaka zahteva mora biti poslava v zgoraj navedeni obliki. V primeru da ukaz ne potrebuje argumentov, <b>prm</b> vsebuje samo en znak, <b>0</b> (ničla, ASCII 048/0x30). 
+                    Verjeten odgovor je poslan v enaki obliki, z enakim <b>ff</b> in <b>cccc</b>, z <b>ss</b> in <b>rr</b> zamenjana med sabo, <b>prm</b> pa vsebuje vrnjeno napako.
+                    </p>
+                    <p class="table-text">Vrnjene napake so lahko sledeče: (direktno iz Horiba dokumentacije)</p>
+                    <table class="ascii">
+                        <tr>
+                        <td><b>00</b> </td>
+                        <td> No error
+                        </td></tr>
+                        <tr>
+                        <td><b>E0</b> </td>
+                        <td> There is no stored data
+                        </td></tr>
+                        <tr>
+                        <td><b>EC</b> </td>
+                        <td> Execution refusal because of key lock mode
+                        </td></tr>
+                        <tr>
+                        <td><b>ED</b> </td>
+                        <td> Execution refusal because of key unlock mode
+                        </td></tr>
+                        <tr>
+                        <td><b>EE</b> </td>
+                        <td> Execution refusal because of supervisor mode
+                        </td></tr>
+                        <tr>
+                        <td><b>EF</b> </td>
+                        <td> Execution refusal because of maintainance mode
+                        </td></tr>
+                        <tr>
+                        <td><b>F0</b> </td>
+                        <td> Command format error
+                        </td></tr>
+                        <tr>
+                        <td><b>F1</b> </td>
+                        <td> Parameter error (Out of range of parameter tolerance, etc.)
+                        </td></tr>
+                        <tr>
+                        <td><b>F2</b> </td>
+                        <td> Impracticability by occupancy of other serial ports
+                        </td></tr>
+                        <tr>
+                        <td><b>F3</b> </td>
+                        <td> Under response development (Improper command queuing)
+                        </td></tr>
+                        <tr>
+                        <td><b>F4</b> </td>
+                        <td> Execution refusal because of factory default status
+                        </td></tr>
+                        <tr>
+                        <td><b>F5</b> </td>
+                        <td> Execution refusal because of normal status (Measurement)
+                        </td></tr>
+                        <tr>
+                        <td><b>F6</b> </td>
+                        <td> Execution refusal undel AIC
+                        </td></tr>
+                        <tr>
+                        <td><b>F7</b> </td>
+                        <td> Execution refusal under PURGE
+                        </td></tr>
+                        <tr>
+                        <td><b>F8</b> </td>
+                        <td> Execution refusal because of INTERNAL
+                        </td></tr>
+                        <tr>
+                        <td><b>F9</b> </td>
+                        <td> Execution refusal because of EXTERNAL
+                        </td></tr>
+                        <tr>
+                        <td><b>FA</b> </td>
+                        <td> Execution refusal because of improper line
+                        </td></tr>
+                        <tr>
+                        <td><b>FB</b> </td>
+                        <td> /
+                        </td></tr>
+                        <tr>
+                        <td><b>FC</b> </td>
+                        <td> Execution refusal under reboot execution
+                        </td></tr>
+                        <tr>
+                        <td><b>FD</b> </td>
+                        <td> Model compatibility error (A command was transmitted to the model which is not supported)
+                        </td></tr>
+                        <tr>
+                        <td><b>FE</b> </td>
+                        <td> Non-implemented command (The command is not implemented)
+                        </td></tr>
+                        <tr>
+                        <td><b>FF</b> </td>
+                        <td> Internal error (It does not usually occur)
+                        </td></tr>
+                    </table><br>
+                    <p class="table-text">Ukazi, ki jih koncentrator pošilja Horiba instrumentom:</p>
+                    <table class="ascii">
+                        <tr>
+                        <td> <b>R001</b> </td>
+                        <td> Instantaneous valu acquisition command
+                        </td></tr>
+                        <tr>
+                        <td> <b>R037</b> </td>
+                        <td> Pressure value information acquisition command
+                        </td></tr>
+                        <tr>
+                        <td> <b>R038</b> </td>
+                        <td> Flow value information acquisition command
+                        </td></tr>
+                        <tr>
+                        <td> <b>R039</b> </td>
+                        <td> Temerature value information acquisition command
+                        </td></tr>
+                        <tr>
+                        <td> <b>R063</b> </td>
+                        <td> Lamp voltage record data acquisition command
+                        </td></tr>
+                        <tr>
+                        <td> <b>A015</b> </td>
+                        <td> AIC status change request command
+                        </td></tr>
+                    
+                    </table>
+                
+                <a class="a" href="#top">Pojdi na vrh</a>
+                    
+  <!------------------------    2 ThermoScientific C-link ---------------------------------------------------------------- !-->  
+                
+                <h2 id=clink>2 ThermoScientific C-link</h2>
+                <h3>Opis merilnika</h3>
+                    <p class="main-text">
+                    Instrument lahko komunicira preko RS232 preko protokola Bayern/Hessen ali C-link. Bayern/Hessen ni na voljo pri instrumentu 17c. Nekateri instrumenti lahko komunicirajo preko LAN porta s protokolom C-link.
+                    </p>
+                <h3>Nastavitve</h3>
+                <p class="table-text">Privzete RS232 nastavitve:</p>
+                    <table class=ascii>
+                        <tr>
+                            <td> speed </td>
+                            <td> <b>9600</b>
+                            </td></tr>
+                            <tr>
+                            <td> data bits </td>
+                            <td> <b>8</b>
+                            </td></tr>
+                            <tr>
+                            <td> parity </td>
+                            <td> <b>none</b>
+                            </td></tr>
+                            <tr>
+                            <td> stop bits </td>
+                            <td> <b>1</b>
+                            </td></tr>
+                            <tr>
+                            <td> Instrument ID </td>
+                            <td> <b>49</b>
+                            </td></tr>
+                    </table>
+                    <p class="table-text">Nastavitev instrumenta preko menijev:</p>
+                    <li>Bayern/Hessen</li>
+                    <pre>
+Main menu > Instrument Controls > Communication Settings
+9600 8n1
+Communication Protocol > Geysitech
+Instrument ID 49  // ponavadi je to model instrumenta - 49i ima 49, 17c ima 17
+</pre>
+                    <li>C-link</li>
+                    <pre>
+Main menu > Instrument Controls > Communication Settings
+9600 8n1
+Communication Protocol > Clink
+Instrument ID 49  // velja enako kot za Bayern/Hessen
+</pre>
+                    OPOZORILO:
+                        <li>verižit komande ni mogoče</li>
+                        <li>pred vsako komando je potrebno dati delay cca 300ms</li>
+                        <li>brati max na 10s</li>
+                    <h3>Opis sestave splošnega sporočila</h3>
+                    <p class="table-text">Ukazi in odgovori so standardni ASCII sporočila, ki se končajo z &lt;CR&gt;.</p>
+                    <h3>Ukazi in rezultati</h3>
+                    <p class="main-text">Ukaz proti instrumentu preko protokola C-link preko RS232 ima obliko:</p>
+                    <pre>{i}(plin)&lt;cr&gt;</pre>
+                    <p class="main-text">če se komunicira preko LAN porta, potem ima ukaz obliko:</p>
+                    <pre>(plin)&lt;cr&gt;</pre>
+                    <p class="main-text">{i} je identifikacija (ID) instrumenta in je obvezna, če se komunicira preko RS232. {i} je 8 bitni ASCII znak, ki se izračuna ASCII 128+id instrumenta:</p>
+                    <pre>&lt;ASCII 128+instrumentID&gt;plin&lt;CR&gt;</pre>
+                    <p class="main-text">primer za plin <b>NO</b>:</p>
+                    <pre>&lt;145&gt;no&lt;CR&gt;   // v hex obliki 91 6e 6f 0d</pre>
+                    <p class="main-text">vrne:</p>
+                    <pre>no 3272E-2 ppb&lt;LF&gt;
+sum 03FB&lt;CR&gt;</pre>
+                    <p class="main-text">Hex:</p>
+                    <pre>00000000: 6e 6f 20 33 32 38 35 45   2d 32 20 70 70 62 2a 0a 
+00000010: 73 75 6d 20 30 33 46 46   0d
+</pre>
+                    <p class="main-text">Vsak ukaz vrne odgovor, ki ima v prvi vrstici tip plina in izmerjeno vrednost, konec prve vrstive je ločen z <LF>, nato v drugi vrstici, končana z znakom &lt;CR&gt, pa checksum prve vrstice, za preverjanje pravilnosti.</p>
+                    <p class="main-text">Ostale možne zahteve:</p>
+                    <pre>
+no: &lt;145&gt;no&lt;CR&gt;   // v hex obliki 91 6e 6f 0d
+no2: &lt;145&gt;no2&lt;CR&gt;   // v hex obliki 91 6e 6f 32 0d
+no3: &lt;145&gt;no3&lt;CR&gt;   // v hex obliki 91 6e 6f 33 0d
+nox: &lt;145&gt;nox&lt;CR&gt;   // v hex obliki 91 6e 6f 78 0d
+nh3: &lt;145&gt;nh3&lt;CR&gt;   // v hex obliki 91 6e 68 33 0d
+nt: &lt;145&gt;nt&lt;CR&gt;   // v hex obliki 91 6e 74 0d
+</pre>
+<pre>preverjanje stanja instrumenta: &lt;145&gt;gas mode&lt;CR&gt;
+rezultat: gas mode sample
+postavi instrument v sample mode: &lt;145&gt;set sample&lt;CR&gt;
+rezultat: set sample ok
+postavi instrument v zero mode: &lt;145&gt;set zero&lt;CR&gt;
+rezultat: set zero ok
+postavi instrument v span mode: &lt;145&gt;set span&lt;CR&gt;
+rezultat: set span ok
+</pre>
+<pre>zahteva: flow
+odgovor: flow 1.108 l/m
+zahteva: chamber temp
+odgovor: chamber temp 45.2 deg C
+zahteva: internal temp
+odgovor: internal temp 27.2 deg C
+zahteva: motor  //samo pri 48i
+odgovor: motor 100%
+zahteva: pres
+odgovor: pres 753.4 mmHg
+</pre>
+                    <p class="main-text">CLINK preko LAN porta z SUM:</p>
+                    <p class="main-text">ukaz:</p>
+                    <pre>o3
+</pre>
+                  <p class="main-text">odgovor:</p>
+                    <pre>
+o3 7.256E+00 ppb*&lt;0a&gt;
+sum 0420&lt;0d&gt;&lt;00&gt;
+</pre>  
+
+                
+                <a class="a" href="#top">Pojdi na vrh</a>              
+<!------------------------    END ---------------------------------------------------------------- !-->    
+                <a href="../../instrumenti/index.html">< Nazaj</a>
+            </div>
+        </div>
+        
+    </body>
